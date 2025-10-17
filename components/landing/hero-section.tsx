@@ -54,9 +54,15 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Subtle background gradient */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
+      {/* Animated gradient bubbles */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        {/* Large center bubble */}
+        <div className="absolute left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-400/10 to-purple-400/10 blur-3xl" />
+
+        {/* Animated floating bubbles */}
+        <div className="animate-blob absolute left-[20%] top-[10%] h-72 w-72 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 blur-3xl" />
+        <div className="animate-blob animation-delay-2000 absolute right-[15%] top-[30%] h-96 w-96 rounded-full bg-gradient-to-r from-cyan-400/15 to-blue-400/15 blur-3xl" />
+        <div className="animate-blob animation-delay-4000 absolute bottom-[20%] left-[30%] h-80 w-80 rounded-full bg-gradient-to-r from-pink-400/15 to-rose-400/15 blur-3xl" />
       </div>
     </section>
   )
