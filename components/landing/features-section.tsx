@@ -5,25 +5,25 @@ const features = [
     icon: Zap,
     title: "Lightning Fast",
     description:
-      "Built with performance in mind. Experience blazing-fast load times and smooth interactions.",
+      "Built for performance. Experience fast load times and smooth interactions.",
   },
   {
     icon: Shield,
     title: "Secure by Default",
     description:
-      "Enterprise-grade security with end-to-end encryption. Your data is always protected.",
+      "Enterprise-grade security. Your data is always protected.",
   },
   {
     icon: Palette,
     title: "Beautiful Design",
     description:
-      "Carefully crafted UI components that look great on any device. Dark mode included.",
+      "Carefully crafted UI that looks great on any device. Dark mode included.",
   },
   {
     icon: LineChart,
     title: "Advanced Analytics",
     description:
-      "Track your growth with detailed insights and actionable metrics in real-time.",
+      "Track your growth with detailed insights and actionable metrics.",
   },
   {
     icon: Users,
@@ -35,22 +35,21 @@ const features = [
     icon: Sparkles,
     title: "AI-Powered",
     description:
-      "Leverage cutting-edge AI to automate tasks and boost your productivity.",
+      "Leverage AI to automate tasks and boost your productivity.",
   },
 ]
 
 export function FeaturesSection() {
   return (
-    <section className="border-t bg-muted/30 py-20 md:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="features">
+      <div className="mx-auto max-w-7xl">
         {/* Section Header */}
         <div className="mx-auto mb-16 max-w-3xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Everything you need to succeed
           </h2>
           <p className="text-lg text-muted-foreground">
-            Powerful features designed to help you build, launch, and grow your
-            product with confidence.
+            Powerful features to help you grow your social media presence
           </p>
         </div>
 
@@ -61,13 +60,18 @@ export function FeaturesSection() {
             return (
               <div
                 key={feature.title}
-                className="group relative rounded-2xl border bg-card p-8 transition-all hover:shadow-lg"
+                className="group"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <Icon className="h-6 w-6" />
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                  <Icon className="h-5 w-5 text-foreground" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+
+                <h3 className="mb-2 text-lg font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {feature.description}
+                </p>
               </div>
             )
           })}
