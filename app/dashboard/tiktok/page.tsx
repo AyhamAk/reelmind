@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
-import { Sparkles, Video, BarChart3, Plus, TrendingUp, Music } from "lucide-react"
+import { Sparkles, Video, Plus, TrendingUp, Music } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 

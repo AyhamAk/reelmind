@@ -9,18 +9,18 @@ export function HeroSection() {
         <div className="mx-auto max-w-3xl text-center">
           {/* Simple badge */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1 text-sm font-medium">
-            <span className="text-foreground">Introducing ReelMind</span>
+            <span className="text-foreground">Open-source • Privacy-first • n8n-powered</span>
           </div>
 
           {/* Clean, large headline */}
           <h1 className="mb-6 text-5xl font-semibold leading-tight tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            Create, schedule, and grow your social media presence
+            Social media automation for creators who own their data
           </h1>
 
           {/* Subheadline */}
           <p className="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-muted-foreground">
-            The all-in-one platform for TikTok and Instagram creators.
-            AI-powered tools to help you create stunning content and manage your growth.
+            Automate Instagram posting. Generate viral TikTok content. Predict engagement with AI.
+            Built on open-source n8n. Your data, your rules.
           </p>
 
           {/* Simple CTA Buttons */}

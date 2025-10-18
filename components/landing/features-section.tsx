@@ -1,41 +1,41 @@
-import { Zap, Shield, Palette, LineChart, Users, Sparkles } from "lucide-react"
+import { Workflow, Sparkles, Calendar, BarChart3, Shield, TrendingUp } from "lucide-react"
 
 const features = [
   {
-    icon: Zap,
-    title: "Lightning Fast",
+    icon: TrendingUp,
+    title: "Viral Score AI™",
     description:
-      "Built for performance. Experience fast load times and smooth interactions.",
+      "Predict viral potential before you post. AI analyzes your content and suggests improvements to maximize engagement.",
+  },
+  {
+    icon: Workflow,
+    title: "Open-Source n8n",
+    description:
+      "Build unlimited automation workflows with n8n. Self-host for complete control or use our managed infrastructure.",
   },
   {
     icon: Shield,
-    title: "Secure by Default",
+    title: "Privacy-First",
     description:
-      "Enterprise-grade security. Your data is always protected.",
-  },
-  {
-    icon: Palette,
-    title: "Beautiful Design",
-    description:
-      "Carefully crafted UI that looks great on any device. Dark mode included.",
-  },
-  {
-    icon: LineChart,
-    title: "Advanced Analytics",
-    description:
-      "Track your growth with detailed insights and actionable metrics.",
-  },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description:
-      "Work together seamlessly. Invite your team and collaborate in real-time.",
+      "Your data stays yours. No third-party selling. Self-hosting available. Full GDPR compliance built-in.",
   },
   {
     icon: Sparkles,
-    title: "AI-Powered",
+    title: "AI Content Generation",
     description:
-      "Leverage AI to automate tasks and boost your productivity.",
+      "Generate viral captions, hashtags, and content ideas powered by advanced AI. Create engaging posts in seconds.",
+  },
+  {
+    icon: Calendar,
+    title: "Smart Scheduling",
+    description:
+      "Schedule posts at optimal times across Instagram and TikTok. Automate your posting calendar with intelligent timing.",
+  },
+  {
+    icon: BarChart3,
+    title: "Advanced Analytics",
+    description:
+      "Track engagement, reach, and performance metrics. Make data-driven decisions to grow your audience.",
   },
 ]
 

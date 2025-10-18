@@ -1,24 +1,24 @@
 import React from "react"
 import Link from "next/link"
-import { Instagram, Calendar, Sparkles, Wand2, BarChart3, Clock, ArrowRight, Video, Image } from "lucide-react"
+import { Instagram, Calendar, Wand2, BarChart3, Clock, ArrowRight, Video, Image, TrendingUp, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const products = [
   {
-    name: "Social Media Manager",
+    name: "Instagram Manager",
     description:
-      "Schedule posts, track analytics, and manage your entire social presence from one dashboard.",
+      "Automate Instagram posts, track analytics, and schedule content with official Graph API integration.",
     icon: Calendar,
     gradient: "from-pink-500 via-rose-500 to-purple-600",
     badge: "Most Popular",
     features: [
       {
         icon: Calendar,
-        title: "Auto Posting",
+        title: "Auto-Post to IG",
       },
       {
         icon: BarChart3,
-        title: "Analytics",
+        title: "Real Analytics",
       },
       {
         icon: Clock,
@@ -31,14 +31,14 @@ const products = [
   {
     name: "Instagram Generator",
     description:
-      "Create stunning posts, stories, and reels in seconds with AI-powered design tools.",
+      "Create stunning posts, stories, and reels with AI. Get viral scores before you post.",
     icon: Instagram,
     gradient: "from-purple-500 via-pink-500 to-rose-500",
     badge: null,
     features: [
       {
-        icon: Sparkles,
-        title: "AI Design",
+        icon: TrendingUp,
+        title: "Viral Score AI",
       },
       {
         icon: Image,
@@ -46,31 +46,31 @@ const products = [
       },
       {
         icon: Wand2,
-        title: "Templates",
+        title: "AI Templates",
       },
     ],
     cta: "Create Content",
     ctaHref: "/dashboard/instagram",
   },
   {
-    name: "TikTok Generator",
+    name: "TikTok Content Studio",
     description:
-      "Generate viral-ready videos, thumbnails, and captions that drive engagement.",
+      "Generate viral videos, captions, and hashtags. Download and upload to TikTok with one tap.",
     icon: Video,
     gradient: "from-cyan-500 via-blue-500 to-indigo-600",
     badge: "New",
     features: [
       {
-        icon: Sparkles,
-        title: "AI Video",
+        icon: TrendingUp,
+        title: "Viral Score AI",
       },
       {
         icon: Video,
-        title: "Viral Templates",
+        title: "Video Generator",
       },
       {
-        icon: BarChart3,
-        title: "Trends",
+        icon: Zap,
+        title: "Trend Insights",
       },
     ],
     cta: "Create Content",
@@ -94,7 +94,7 @@ export function ProductsSection() {
 
         {/* Products Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product, index) => {
+          {products.map((product) => {
             const ProductIcon = product.icon
 
             return (
