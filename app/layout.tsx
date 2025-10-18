@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from "@/components/providers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/components/providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,8 +13,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ReelMind - Social Media Management & Content Creation",
   description: "Transform your ideas into reality with our all-in-one platform for TikTok and Instagram.",
-  title: "Reelmind",
-  description: "Your movie management platform",
 };
 
 export default function RootLayout({
@@ -27,16 +24,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable} font-sans antialiased`}
+        suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-        <Providers>{children}</Providers>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

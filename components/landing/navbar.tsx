@@ -3,8 +3,12 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
+import { useSession, signOut } from "next-auth/react"
+import { LogOut, User } from "lucide-react"
 
 export function Navbar() {
+  const { data: session } = useSession()
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -38,12 +42,32 @@ export function Navbar() {
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
           <ThemeToggle />
-          <Button variant="ghost" asChild className="hidden sm:inline-flex">
-            <Link href="/login">Sign In</Link>
-          </Button>
-          <Button asChild size="sm" className="bg-foreground text-background hover:bg-foreground/90">
-            <Link href="/login">Get Started</Link>
-          </Button>
+          {session?.user ? (
+            <>
+              <div className="hidden items-center gap-2 rounded-lg border bg-muted/50 px-3 py-1.5 sm:flex">
+                <User className="h-4 w-4" />
+                <span className="text-sm font-medium">{session.user.name}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="hidden sm:inline-flex"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild className="hidden sm:inline-flex">
+                <Link href="/login">Sign In</Link>
+              </Button>
+              <Button asChild size="sm" className="bg-foreground text-background hover:bg-foreground/90">
+                <Link href="/login">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </nav>

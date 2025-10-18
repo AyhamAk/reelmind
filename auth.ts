@@ -35,4 +35,10 @@ export const config = {
   },
 } satisfies NextAuthConfig
 
-export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth(config)
+const nextAuth = NextAuth(config)
+
+export const auth = nextAuth.auth
+export const signIn = nextAuth.signIn
+export const signOut = nextAuth.signOut
+export const handlers = nextAuth.handlers
+export const { GET, POST } = nextAuth.handlers
