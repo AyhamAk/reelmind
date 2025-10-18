@@ -26,7 +26,7 @@ const products = [
       },
     ],
     cta: "Start Managing",
-    ctaHref: "/login",
+    ctaHref: "/dashboard/manager",
   },
   {
     name: "Instagram Generator",
@@ -50,7 +50,7 @@ const products = [
       },
     ],
     cta: "Create Content",
-    ctaHref: "/login",
+    ctaHref: "/dashboard/instagram",
   },
   {
     name: "TikTok Generator",
@@ -74,7 +74,7 @@ const products = [
       },
     ],
     cta: "Create Content",
-    ctaHref: "/login",
+    ctaHref: "/dashboard/tiktok",
   },
 ]
 
