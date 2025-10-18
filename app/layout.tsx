@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "@/components/providers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -12,6 +14,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ReelMind - Social Media Management & Content Creation",
   description: "Transform your ideas into reality with our all-in-one platform for TikTok and Instagram.",
+  title: "Reelmind",
+  description: "Your movie management platform",
 };
 
 export default function RootLayout({
@@ -32,6 +36,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
