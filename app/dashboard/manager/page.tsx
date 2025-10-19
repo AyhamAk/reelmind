@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
-import { Calendar, BarChart3, Clock, Plus, Instagram as InstagramIcon, Video } from "lucide-react"
+import { Calendar, BarChart3, Clock, Plus, Instagram as InstagramIcon, Video, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
@@ -25,6 +25,12 @@ export default async function ManagerPage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground">{session.user.name}</span>
+            <Button asChild variant="outline" size="sm">
+              <Link href="/dashboard/settings">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </Link>
+            </Button>
             <Button asChild variant="outline" size="sm">
               <Link href="/">Home</Link>
             </Button>
