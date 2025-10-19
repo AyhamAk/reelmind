@@ -48,12 +48,18 @@ export function WorkflowMarketplaceSection() {
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-sm font-medium">
             <Workflow className="h-4 w-4" />
             <span className="text-foreground">n8n Workflow Marketplace</span>
+            <span className="rounded-full bg-yellow-500/10 px-2 py-0.5 text-xs font-semibold text-yellow-600 dark:text-yellow-500">
+              Coming Soon
+            </span>
           </div>
           <h2 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Install automations in one click
           </h2>
           <p className="text-lg text-muted-foreground">
             Browse community-built n8n workflows. No coding required. Deploy instantly.
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground italic">
+            Workflow marketplace launching soon. Get early access when you sign up!
           </p>
         </div>
 
@@ -91,9 +97,14 @@ export function WorkflowMarketplaceSection() {
                 </div>
               </div>
 
-              <Button variant="outline" size="sm" className="w-full group-hover:bg-muted">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full cursor-not-allowed opacity-60"
+                disabled
+              >
                 <Zap className="mr-2 h-4 w-4" />
-                Install Workflow
+                Coming Soon
               </Button>
             </div>
           ))}
@@ -102,14 +113,22 @@ export function WorkflowMarketplaceSection() {
         {/* CTA to Marketplace */}
         <div className="text-center">
           <p className="mb-4 text-muted-foreground">
-            100+ workflows available in the marketplace
+            100+ workflows will be available when marketplace launches
           </p>
-          <Button asChild size="lg">
-            <Link href={ctaHref}>
-              {session?.user ? "View My Workflows" : "Browse All Workflows"}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+          <Button
+            size="lg"
+            className="cursor-not-allowed opacity-60"
+            disabled
+          >
+            Marketplace Coming Soon
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Want early access?{" "}
+            <Link href={ctaHref} className="font-medium text-foreground underline">
+              {session?.user ? "Check your dashboard" : "Sign up now"}
+            </Link>
+          </p>
         </div>
       </div>
     </section>
