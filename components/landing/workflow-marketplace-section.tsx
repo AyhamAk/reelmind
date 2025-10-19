@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import { Download, Star, Workflow, Zap, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
 
 const workflows = [
   {
@@ -34,6 +37,9 @@ const workflows = [
 ]
 
 export function WorkflowMarketplaceSection() {
+  const { data: session } = useSession()
+  const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+
   return (
     <section className="border-t bg-muted/30 px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="workflows">
       <div className="mx-auto max-w-7xl">
@@ -99,8 +105,8 @@ export function WorkflowMarketplaceSection() {
             100+ workflows available in the marketplace
           </p>
           <Button asChild size="lg">
-            <Link href="/login">
-              Browse All Workflows
+            <Link href={ctaHref}>
+              {session?.user ? "View My Workflows" : "Browse All Workflows"}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

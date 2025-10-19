@@ -28,24 +28,30 @@ export function Navbar() {
 
         {/* Navigation Links */}
         <div className="hidden items-center gap-8 md:flex">
-          <Link
+          <a
             href="#products"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
           >
             Products
-          </Link>
-          <Link
+          </a>
+          <a
             href="#features"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
           >
             Features
-          </Link>
-          <Link
+          </a>
+          <a
+            href="#workflows"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
+          >
+            Workflows
+          </a>
+          <a
             href="#pricing"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
           >
             Pricing
-          </Link>
+          </a>
         </div>
 
         {/* Right Side Actions */}

@@ -4,27 +4,27 @@ import { Separator } from "@/components/ui/separator"
 
 const footerLinks = {
   product: [
+    { label: "Products", href: "#products" },
     { label: "Features", href: "#features" },
+    { label: "Workflows", href: "#workflows" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Security", href: "#security" },
-    { label: "Roadmap", href: "#roadmap" },
   ],
   company: [
-    { label: "About", href: "#about" },
-    { label: "Blog", href: "#blog" },
-    { label: "Careers", href: "#careers" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/#about" },
+    { label: "Dashboard", href: "/dashboard/manager" },
+    { label: "Instagram", href: "/dashboard/instagram" },
+    { label: "TikTok", href: "/dashboard/tiktok" },
   ],
   resources: [
-    { label: "Documentation", href: "#docs" },
-    { label: "Help Center", href: "#help" },
-    { label: "API Reference", href: "#api" },
-    { label: "Community", href: "#community" },
+    { label: "Documentation", href: "/#docs" },
+    { label: "Help Center", href: "/#help" },
+    { label: "Login", href: "/login" },
+    { label: "Sign Up", href: "/signup" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms of Service", href: "/terms-of-service" },
-    { label: "Cookie Policy", href: "#cookies" },
+    { label: "Contact", href: "/login" },
   ],
 }
 

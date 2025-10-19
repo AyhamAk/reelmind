@@ -1,8 +1,14 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
 
 export function CtaSection() {
+  const { data: session } = useSession()
+  const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+
   return (
     <section className="relative border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="relative z-10 mx-auto max-w-4xl text-center">
@@ -18,8 +24,8 @@ export function CtaSection() {
             asChild
             className="w-full bg-foreground text-background transition-all hover:bg-foreground/90 sm:w-auto"
           >
-            <Link href="/login">
-              Start Free Trial
+            <Link href={ctaHref}>
+              {session?.user ? "Go to Dashboard" : "Start Free Trial"}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -29,7 +35,9 @@ export function CtaSection() {
             asChild
             className="w-full transition-all sm:w-auto"
           >
-            <Link href="#contact">Contact Sales</Link>
+            <Link href={session?.user ? "/dashboard/settings" : "/login"}>
+              {session?.user ? "Account Settings" : "Contact Sales"}
+            </Link>
           </Button>
         </div>
         <p className="mt-6 text-sm text-muted-foreground">

@@ -1,8 +1,14 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
 
 export function HeroSection() {
+  const { data: session } = useSession()
+  const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+
   return (
     <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-5xl">
@@ -30,8 +36,8 @@ export function HeroSection() {
               asChild
               className="w-full bg-foreground text-background transition-all hover:bg-foreground/90 sm:w-auto"
             >
-              <Link href="/login">
-                Get Started
+              <Link href={ctaHref}>
+                {session?.user ? "Go to Dashboard" : "Get Started"}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import { Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useSession } from "next-auth/react"
 
 const plans = [
   {
@@ -18,7 +21,8 @@ const plans = [
       "Community support",
     ],
     cta: "Get Started",
-    ctaHref: "/login",
+    ctaHrefLoggedOut: "/login",
+    ctaHrefLoggedIn: "/dashboard/manager",
     popular: false,
   },
   {
@@ -38,7 +42,8 @@ const plans = [
       "Workflow marketplace access",
     ],
     cta: "Start Free Trial",
-    ctaHref: "/login",
+    ctaHrefLoggedOut: "/login",
+    ctaHrefLoggedIn: "/dashboard/manager",
     popular: true,
   },
   {
@@ -59,12 +64,15 @@ const plans = [
       "SLA guarantee",
     ],
     cta: "Contact Sales",
-    ctaHref: "/login",
+    ctaHrefLoggedOut: "/login",
+    ctaHrefLoggedIn: "/dashboard/manager",
     popular: false,
   },
 ]
 
 export function PricingSection() {
+  const { data: session } = useSession()
+
   return (
     <section className="border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="pricing">
       <div className="mx-auto max-w-7xl">
@@ -80,7 +88,9 @@ export function PricingSection() {
 
         {/* Pricing Cards */}
         <div className="grid gap-8 lg:grid-cols-3">
-          {plans.map((plan) => (
+          {plans.map((plan) => {
+            const ctaHref = session?.user ? plan.ctaHrefLoggedIn : plan.ctaHrefLoggedOut
+            return (
             <div
               key={plan.name}
               className={`relative flex flex-col overflow-hidden rounded-xl border bg-card p-8 ${
@@ -132,7 +142,7 @@ export function PricingSection() {
                 }`}
                 variant={plan.popular ? "default" : "outline"}
               >
-                <Link href={plan.ctaHref}>{plan.cta}</Link>
+                <Link href={ctaHref}>{plan.cta}</Link>
               </Button>
 
               {/* Features */}
@@ -150,7 +160,8 @@ export function PricingSection() {
                 </ul>
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* FAQ / Additional Info */}
