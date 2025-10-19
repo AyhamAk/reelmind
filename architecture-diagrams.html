@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reelmind - Architecture Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-tab {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .diagram-section {
+            display: none;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .diagram-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .diagram-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .diagram-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .mermaid {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tech-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .tech-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.95em;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .info-box li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Reelmind</h1>
+            <p class="subtitle">System Architecture & Visual Documentation</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showDiagram('overview')">📊 Overview</button>
+            <button class="nav-tab" onclick="showDiagram('database')">🗄️ Database Schema</button>
+            <button class="nav-tab" onclick="showDiagram('auth')">🔐 Authentication Flow</button>
+            <button class="nav-tab" onclick="showDiagram('password-reset')">🔑 Password Reset</button>
+            <button class="nav-tab" onclick="showDiagram('structure')">🏗️ App Structure</button>
+            <button class="nav-tab" onclick="showDiagram('dataflow')">📡 Data Flow</button>
+            <button class="nav-tab" onclick="showDiagram('deployment')">🚀 Deployment</button>
+            <button class="nav-tab" onclick="showDiagram('stack')">⚡ Tech Stack</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="diagram-section active">
+            <h2>📊 System Architecture Overview</h2>
+            <p>High-level view of how Reelmind's components work together.</p>
+
+            <div class="mermaid">
+graph TB
+    subgraph "Client Side - Browser"
+        A[👤 User Browser] --> B[Next.js Pages]
+        B --> C[React Components]
+    end
+
+    subgraph "Next.js Application - localhost:3001"
+        B --> D[App Router]
+        D --> E[Server Components]
+        D --> F[Client Components]
+        E --> G[NextAuth API Routes]
+        G --> H[Prisma ORM]
+    end
+
+    subgraph "External Services"
+        I[🔑 Google OAuth]
+        J[☁️ Supabase PostgreSQL]
+        K[📧 Resend Email API]
+    end
+
+    A -->|HTTPS| B
+    G -->|OAuth 2.0| I
+    H -->|SQL Queries| J
+    G -->|Email API| K
+
+    style A fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style B fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style G fill:#ffe1e1,stroke:#f44336,stroke-width:2px
+    style J fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+            </div>
+
+            <div class="info-box">
+                <h4>Key Components:</h4>
+                <ul>
+                    <li><strong>Client Side:</strong> User's browser running React components</li>
+                    <li><strong>Next.js App:</strong> Server-side rendering + API routes (Port 3001)</li>
+                    <li><strong>Google OAuth:</strong> Third-party authentication provider</li>
+                    <li><strong>Supabase:</strong> Cloud-hosted PostgreSQL database</li>
+                    <li><strong>Resend:</strong> Transactional email service for password resets</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Database Schema Section -->
+        <div id="database" class="diagram-section">
+            <h2>🗄️ Database Schema (ERD)</h2>
+            <p>Entity Relationship Diagram showing all database tables and their relationships.</p>
+
+            <div class="mermaid">
+erDiagram
+    User ||--o{ Account : "has many"
+    User ||--o{ Session : "has many"
+
+    User {
+        string id PK "Primary Key - cuid()"
+        string name "User's display name"
+        string email UK "Unique email address"
+        datetime emailVerified "Email verification timestamp"
+        string image "Profile picture URL"
+        string password "Hashed password (bcrypt)"
+        datetime createdAt "Account creation date"
+        datetime updatedAt "Last update timestamp"
+    }
+
+    Account {
+        string provider PK "OAuth provider name"
+        string providerAccountId PK "Provider's user ID"
+        string userId FK "Foreign Key to User"
+        string type "Account type"
+        string refresh_token "OAuth refresh token"
+        string access_token "OAuth access token"
+        int expires_at "Token expiration"
+        string token_type "Token type"
+        string scope "OAuth scopes"
+        string id_token "ID token from OAuth"
+        string session_state "Session state"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    Session {
+        string sessionToken UK "Unique session identifier"
+        string userId FK "Foreign Key to User"
+        datetime expires "Session expiration time"
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    VerificationToken {
+        string identifier PK "Email or phone"
+        string token PK "Verification token"
+        datetime expires "Token expiration"
+    }
+            </div>
+
+            <div class="info-box">
+                <h4>Table Purposes:</h4>
+                <ul>
+                    <li><strong>User:</strong> Stores user profile information (name, email, hashed password)</li>
+                    <li><strong>Account:</strong> Links users to OAuth providers (Google, future: Apple, GitHub)</li>
+                    <li><strong>Session:</strong> Tracks active user sessions for authentication</li>
+                    <li><strong>VerificationToken:</strong> Used for password reset tokens (expires in 1 hour)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Authentication Flow Section -->
+        <div id="auth" class="diagram-section">
+            <h2>🔐 Authentication Flow (Google OAuth & Email/Password)</h2>
+            <p>Step-by-step sequence diagram of the Google OAuth and email/password authentication process.</p>
+
+            <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Browser
+    participant NextJS as Next.js App
+    participant NextAuth
+    participant Google as Google OAuth
+    participant Prisma
+    participant Supabase as Supabase DB
+
+    User->>Browser: Visit localhost:3001
+    Browser->>NextJS: GET /
+    NextJS->>NextAuth: Check session
+    NextAuth-->>NextJS: No session found
+    NextJS-->>Browser: Redirect to /login
+
+    User->>Browser: Click "Continue with Google"
+    Browser->>NextAuth: POST signIn("google")
+    NextAuth->>Google: Redirect to Google OAuth
+    Google->>User: Show account selection
+    User->>Google: Select account & approve
+    Google->>NextAuth: Callback with auth code
+
+    NextAuth->>Google: Exchange code for tokens
+    Google-->>NextAuth: Return access token + profile
+
+    NextAuth->>Prisma: Find or create User
+    Prisma->>Supabase: SELECT/INSERT User
+    Supabase-->>Prisma: User data
+
+    NextAuth->>Prisma: Create Account record
+    Prisma->>Supabase: INSERT Account
+
+    NextAuth->>Prisma: Create Session
+    Prisma->>Supabase: INSERT Session
+    Supabase-->>Prisma: Session created
+
+    NextAuth-->>Browser: Set session cookie
+    Browser->>NextJS: Redirect to /
+    NextJS->>NextAuth: Check session
+    NextAuth-->>NextJS: Session valid ✓
+    NextJS-->>Browser: Render home page
+
+    Browser->>User: Show welcome page 🎉
+            </div>
+
+            <div class="info-box">
+                <h4>Authentication Methods:</h4>
+                <ul>
+                    <li><strong>Google OAuth:</strong> Third-party authentication via Google accounts</li>
+                    <li><strong>Email/Password:</strong> Traditional credentials-based authentication with bcrypt hashing</li>
+                    <li><strong>Session Management:</strong> Database sessions with NextAuth.js</li>
+                    <li><strong>Security:</strong> Passwords hashed with bcrypt (10 salt rounds)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Password Reset Flow Section -->
+        <div id="password-reset" class="diagram-section">
+            <h2>🔑 Password Reset Flow</h2>
+            <p>Complete password reset process with email verification and token-based security.</p>
+
+            <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant Browser
+    participant ForgotPage as /forgot-password
+    participant ForgotAPI as /api/auth/forgot-password
+    participant Prisma
+    participant Supabase as Supabase DB
+    participant Resend as Resend Email API
+    participant Email as User's Email
+    participant ResetPage as /reset-password
+    participant ResetAPI as /api/auth/reset-password
+
+    User->>Browser: Visit /forgot-password
+    Browser->>ForgotPage: Load forgot password form
+    User->>ForgotPage: Enter email address
+    ForgotPage->>ForgotAPI: POST { email }
+
+    ForgotAPI->>Prisma: findUnique(email)
+    Prisma->>Supabase: SELECT User
+    Supabase-->>Prisma: User found
+
+    ForgotAPI->>ForgotAPI: Generate crypto token
+    ForgotAPI->>Prisma: Create VerificationToken
+    Prisma->>Supabase: INSERT token + expires (1hr)
+
+    ForgotAPI->>Resend: Send password reset email
+    Resend->>Email: Email with reset link
+    Email-->>User: Receive email
+
+    User->>Browser: Click reset link
+    Browser->>ResetPage: GET /reset-password?token=xxx
+    ResetPage->>User: Show password reset form
+
+    User->>ResetPage: Enter new password
+    ResetPage->>ResetAPI: POST { token, password }
+
+    ResetAPI->>Prisma: findFirst(token)
+    Prisma->>Supabase: SELECT VerificationToken
+    Supabase-->>Prisma: Token found & valid
+
+    ResetAPI->>ResetAPI: Check token expiration
+    ResetAPI->>ResetAPI: Hash password (bcrypt)
+
+    ResetAPI->>Prisma: Update User password
+    Prisma->>Supabase: UPDATE User SET password
+
+    ResetAPI->>Prisma: Delete VerificationToken
+    Prisma->>Supabase: DELETE token
+
+    ResetAPI-->>Browser: Success response
+    Browser->>User: Show success message
+    User->>Browser: Redirect to /login
+            </div>
+
+            <div class="info-box">
+                <h4>Security Features:</h4>
+                <ul>
+                    <li><strong>Token Generation:</strong> Cryptographically secure random tokens (32 bytes)</li>
+                    <li><strong>Expiration:</strong> Reset tokens expire after 1 hour</li>
+                    <li><strong>One-time Use:</strong> Tokens deleted immediately after successful password reset</li>
+                    <li><strong>Email Privacy:</strong> No email enumeration - always returns success message</li>
+                    <li><strong>Password Hashing:</strong> bcrypt with 10 salt rounds</li>
+                    <li><strong>Minimum Length:</strong> Passwords must be at least 8 characters</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>Email Service (Resend):</h4>
+                <ul>
+                    <li><strong>Development Mode:</strong> Reset links logged to console (no API key needed)</li>
+                    <li><strong>Production Mode:</strong> Professional HTML emails sent via Resend API</li>
+                    <li><strong>Template:</strong> Responsive email design with button + fallback link</li>
+                    <li><strong>Free Tier:</strong> 3,000 emails/month on Resend free plan</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Application Structure Section -->
+        <div id="structure" class="diagram-section">
+            <h2>🏗️ Application Structure</h2>
+            <p>File organization and component hierarchy in the Reelmind project.</p>
+
+            <div class="mermaid">
+graph TD
+    subgraph "Root Layout"
+        A[app/layout.tsx] --> B[SessionProvider]
+    end
+
+    subgraph "Pages"
+        B --> C[app/page.tsx<br/>Home - Protected]
+        B --> D[app/login/page.tsx<br/>Login - Public]
+        B --> D2[app/signup/page.tsx<br/>Signup - Public]
+        B --> D3[app/forgot-password/page.tsx<br/>Forgot Password - Public]
+        B --> D4[app/reset-password/page.tsx<br/>Reset Password - Public]
+    end
+
+    subgraph "API Routes"
+        E[app/api/auth/...nextauth/route.ts<br/>NextAuth Handler]
+        E2[app/api/auth/signup/route.ts<br/>Signup Endpoint]
+        E3[app/api/auth/forgot-password/route.ts<br/>Forgot Password]
+        E4[app/api/auth/reset-password/route.ts<br/>Reset Password]
+    end
+
+    subgraph "UI Components"
+        C --> F[LogoutButton]
+        D --> G[LoginForm]
+        D2 --> G2[SignupForm]
+        D3 --> G3[ForgotPasswordForm]
+        D4 --> G4[ResetPasswordForm]
+        F --> H[ui/button.tsx]
+        G --> H
+        G2 --> H
+        G3 --> H
+        G4 --> H
+        G --> I[ui/input.tsx]
+        G2 --> I
+        G3 --> I
+        G4 --> I
+    end
+
+    subgraph "Configuration & Services"
+        E --> L[auth.ts<br/>NextAuth Config]
+        L --> M[lib/prisma.ts<br/>DB Client]
+        E3 --> M2[lib/email.ts<br/>Email Service]
+        M2 --> M3[Resend API]
+        M --> N[Prisma Client]
+    end
+
+    subgraph "Database"
+        N --> O[prisma/schema.prisma<br/>DB Schema]
+        O --> P[Supabase PostgreSQL]
+    end
+
+    style C fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style D fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style E fill:#ffe1e1,stroke:#f44336,stroke-width:2px
+    style P fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+            </div>
+
+            <div class="info-box">
+                <h4>Directory Structure:</h4>
+                <ul>
+                    <li><strong>app/:</strong> Next.js App Router pages and layouts</li>
+                    <li><strong>components/:</strong> Reusable React components and UI primitives</li>
+                    <li><strong>lib/:</strong> Utility functions and configurations (Prisma client)</li>
+                    <li><strong>prisma/:</strong> Database schema and migrations</li>
+                    <li><strong>auth.ts:</strong> NextAuth.js authentication configuration</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Data Flow Section -->
+        <div id="dataflow" class="diagram-section">
+            <h2>📡 API Routes & Data Flow</h2>
+            <p>How data moves through the application from user actions to database.</p>
+
+            <div class="mermaid">
+graph LR
+    subgraph "Client Actions"
+        A[Sign In Button] --> B[signIn function]
+        C[Sign Out Button] --> D[signOut function]
+    end
+
+    subgraph "API Routes"
+        B --> E[/api/auth/signin]
+        D --> F[/api/auth/signout]
+        E --> G[/api/auth/callback/google]
+    end
+
+    subgraph "NextAuth Handler"
+        E --> H[NextAuth Core]
+        F --> H
+        G --> H
+    end
+
+    subgraph "Database Layer"
+        H --> I[Prisma Adapter]
+        I --> J[User Operations]
+        I --> K[Account Operations]
+        I --> L[Session Operations]
+    end
+
+    subgraph "Supabase Cloud"
+        J --> M[User Table]
+        K --> N[Account Table]
+        L --> O[Session Table]
+    end
+
+    style A fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style C fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style H fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style M fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+    style N fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+    style O fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+            </div>
+
+            <div class="info-box">
+                <h4>Data Flow Explanation:</h4>
+                <ul>
+                    <li><strong>User Action:</strong> Button click triggers NextAuth function</li>
+                    <li><strong>API Route:</strong> NextAuth handles the request via API routes</li>
+                    <li><strong>Prisma Adapter:</strong> Translates NextAuth operations to database queries</li>
+                    <li><strong>Database:</strong> User/Account/Session data stored in Supabase</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Deployment Section -->
+        <div id="deployment" class="diagram-section">
+            <h2>🚀 Deployment Architecture</h2>
+            <p>Current development setup and future production deployment strategy.</p>
+
+            <div class="mermaid">
+graph TB
+    subgraph "Development Environment"
+        A[💻 Local Machine] --> B[localhost:3001<br/>Next.js Dev Server]
+        B --> C[☁️ Supabase Dev DB<br/>Session Pooler]
+    end
+
+    subgraph "Production Environment - Future"
+        D[📦 GitHub Repository]
+        D --> E[▲ Vercel Deployment<br/>Auto-deploy on push]
+        E --> F[☁️ Supabase Prod DB<br/>Separate Database]
+        G[🌐 Custom Domain<br/>reelmind.com] --> E
+        E --> H[🔑 Google OAuth<br/>Production Credentials]
+    end
+
+    subgraph "End Users - Future"
+        I[👥 Real Users] --> G
+    end
+
+    A -.->|git push| D
+
+    style A fill:#e1f5ff,stroke:#0066cc,stroke-width:2px
+    style C fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+    style E fill:#fff4e1,stroke:#ff9800,stroke-width:2px
+    style F fill:#e1ffe1,stroke:#4caf50,stroke-width:2px
+            </div>
+
+            <div class="info-box">
+                <h4>Environment Separation:</h4>
+                <ul>
+                    <li><strong>Development:</strong> localhost:3001 → Supabase cloud database (current)</li>
+                    <li><strong>Production:</strong> Vercel hosting → Separate production database (future)</li>
+                    <li><strong>Workflow:</strong> Git push → Automatic deployment to Vercel</li>
+                    <li><strong>Security:</strong> Different credentials for dev/prod environments</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tech Stack Section -->
+        <div id="stack" class="diagram-section">
+            <h2>⚡ Technology Stack</h2>
+            <p>Complete overview of all technologies used in Reelmind.</p>
+
+            <div class="tech-stack">
+                <div class="tech-card">
+                    <h3>🎨 Frontend</h3>
+                    <p><strong>React 19</strong> - UI library with latest features</p>
+                    <p><strong>Next.js 15</strong> - React framework with App Router</p>
+                    <p><strong>TypeScript 5</strong> - Type safety</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>💅 Styling</h3>
+                    <p><strong>Tailwind CSS v4</strong> - Utility-first CSS framework</p>
+                    <p><strong>Radix UI</strong> - Accessible component primitives</p>
+                    <p><strong>shadcn/ui</strong> - Beautiful component library</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>🔐 Authentication</h3>
+                    <p><strong>NextAuth.js v5</strong> - Auth framework</p>
+                    <p><strong>Google OAuth</strong> - Third-party login</p>
+                    <p><strong>Email/Password</strong> - Credentials auth</p>
+                    <p><strong>bcryptjs</strong> - Password hashing</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>📧 Email Service</h3>
+                    <p><strong>Resend</strong> - Transactional emails</p>
+                    <p><strong>React Email</strong> - Email templates</p>
+                    <p><strong>nodemailer</strong> - Email sending (fallback)</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>🗄️ Database</h3>
+                    <p><strong>PostgreSQL</strong> - Relational database</p>
+                    <p><strong>Supabase</strong> - Cloud database hosting</p>
+                    <p><strong>Prisma ORM</strong> - Type-safe queries</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>🛠️ Build Tools</h3>
+                    <p><strong>Turbopack</strong> - Next-gen bundler</p>
+                    <p><strong>PostCSS</strong> - CSS transformation</p>
+                    <p><strong>ESLint 9</strong> - Code linting</p>
+                </div>
+
+                <div class="tech-card">
+                    <h3>🚀 Deployment</h3>
+                    <p><strong>Vercel</strong> - Serverless hosting (future)</p>
+                    <p><strong>GitHub</strong> - Version control</p>
+                    <p><strong>Git</strong> - Source control</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 30px;">
+                <h4>📋 Development Commands:</h4>
+                <ul>
+                    <li><code>npm run dev</code> - Start development server (port 3001)</li>
+                    <li><code>npm run build</code> - Build for production</li>
+                    <li><code>npm run db:studio</code> - Open Prisma Studio (database GUI)</li>
+                    <li><code>npm run db:push</code> - Sync schema to database</li>
+                    <li><code>npm run db:migrate</code> - Create database migration</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🔗 Important URLs:</h4>
+                <ul>
+                    <li><strong>Local App:</strong> http://localhost:3001</li>
+                    <li><strong>Prisma Studio:</strong> http://localhost:5555</li>
+                    <li><strong>Supabase Dashboard:</strong> https://supabase.com/dashboard</li>
+                    <li><strong>Google Cloud Console:</strong> https://console.cloud.google.com</li>
+                    <li><strong>Resend Dashboard:</strong> https://resend.com/dashboard</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>🎬 <strong>Reelmind</strong> - Social Media Management Platform</p>
+            <p>Created: January 2025 | Status: Active Development</p>
+            <p>Built with ❤️ using Next.js, React, Prisma, Supabase & Resend</p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#764ba2',
+                lineColor: '#667eea',
+                secondaryColor: '#e1f5ff',
+                tertiaryColor: '#fff4e1'
+            }
+        });
+
+        // Tab switching function
+        function showDiagram(diagramId) {
+            // Hide all diagrams
+            const diagrams = document.querySelectorAll('.diagram-section');
+            diagrams.forEach(diagram => diagram.classList.remove('active'));
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected diagram
+            document.getElementById(diagramId).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

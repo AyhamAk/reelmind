@@ -2,7 +2,6 @@
 
 import { GalleryVerticalEnd } from "lucide-react"
 import { signIn } from "next-auth/react"
-import Link from "next/link"
 import { useState } from "react"
 
 import { cn } from "@/lib/utils"
@@ -15,11 +14,13 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
 
-export function LoginForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,6 +32,22 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Something went wrong");
+        return;
+      }
+
+      // After successful signup, automatically log the user in
       const result = await signIn("credentials", {
         email,
         password,
@@ -38,7 +55,7 @@ export function LoginForm({
       });
 
       if (result?.error) {
-        setError(result.error);
+        setError("Account created but login failed. Please try logging in manually.");
       } else {
         window.location.href = "/";
       }
@@ -64,7 +81,7 @@ export function LoginForm({
         }
       });
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Signup error:", error);
     }
   };
 
@@ -87,9 +104,9 @@ export function LoginForm({
               </div>
               <span className="sr-only">Reelmind</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Reelmind</h1>
+            <h1 className="text-xl font-bold">Create your account</h1>
             <FieldDescription>
-              Don&apos;t have an account? <Link href="/signup" className="underline">Sign up</Link>
+              Already have an account? <Link href="/login" className="underline">Sign in</Link>
             </FieldDescription>
           </div>
           {error && (
@@ -97,6 +114,18 @@ export function LoginForm({
               {error}
             </div>
           )}
+          <Field>
+            <FieldLabel htmlFor="name">Full Name</FieldLabel>
+            <Input
+              id="name"
+              type="text"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              disabled={isLoading}
+            />
+          </Field>
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
@@ -110,28 +139,24 @@ export function LoginForm({
             />
           </Field>
           <Field>
-            <div className="flex items-center justify-between">
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Link href="/forgot-password" className="text-sm text-muted-foreground hover:underline">
-                Forgot password?
-              </Link>
-            </div>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
             <Input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Create a password (min 6 characters)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              minLength={6}
               disabled={isLoading}
             />
           </Field>
           <Field>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Logging in..." : "Login"}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Creating account..." : "Create Account"}
             </Button>
           </Field>
-          <FieldSeparator>Or</FieldSeparator>
+          <FieldSeparator>Or continue with</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
             <Button
               variant="outline"
@@ -145,7 +170,7 @@ export function LoginForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with Apple
+              Sign up with Apple
             </Button>
             <Button
               variant="outline"
@@ -159,7 +184,7 @@ export function LoginForm({
                   fill="currentColor"
                 />
               </svg>
-              Continue with Google
+              Sign up with Google
             </Button>
           </Field>
         </FieldGroup>
