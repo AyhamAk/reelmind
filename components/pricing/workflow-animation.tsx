@@ -76,7 +76,7 @@ export function WorkflowAnimation() {
           </div>
 
           {/* Step 2: AI Analysis */}
-          <div className="relative flex-1">
+          <div className="group relative flex-1">
             <div
               className={`transform transition-all duration-700 ${
                 step >= 1 ? "scale-100 opacity-100" : "scale-90 opacity-40"
@@ -93,6 +93,14 @@ export function WorkflowAnimation() {
               <div className="mt-4 text-center">
                 <h4 className="font-semibold">AI Analysis</h4>
                 <p className="text-xs text-muted-foreground">Analyzing patterns</p>
+              </div>
+            </div>
+
+            {/* Tooltip on Hover - Desktop Only */}
+            <div className="pointer-events-none absolute -bottom-16 left-1/2 z-10 hidden -translate-x-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
+              <div className="whitespace-nowrap rounded-lg bg-foreground px-3 py-2 text-xs font-medium text-background shadow-xl">
+                Generating captions • Finding best time • Creating thumbnails
+                <div className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-foreground" />
               </div>
             </div>
 
