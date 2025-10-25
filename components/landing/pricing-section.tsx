@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const plans = [
   {
@@ -72,12 +73,15 @@ const plans = [
 
 export function PricingSection() {
   const { data: session } = useSession()
+  const isVisible = useScrollAnimation("pricing")
 
   return (
     <section className="border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="pricing">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className={`mx-auto mb-16 max-w-3xl text-center transition-all duration-700 ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
           <h2 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Simple, transparent pricing
           </h2>
@@ -88,16 +92,19 @@ export function PricingSection() {
 
         {/* Pricing Cards */}
         <div className="grid gap-8 lg:grid-cols-3">
-          {plans.map((plan) => {
+          {plans.map((plan, index) => {
             const ctaHref = session?.user ? plan.ctaHrefLoggedIn : plan.ctaHrefLoggedOut
             return (
             <div
               key={plan.name}
-              className={`relative flex flex-col overflow-hidden rounded-xl border bg-card p-8 ${
+              className={`relative flex flex-col overflow-hidden rounded-xl border bg-card p-8 transition-all duration-700 ${
                 plan.popular
                   ? "border-foreground shadow-lg ring-2 ring-foreground"
                   : ""
+              } ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
               }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               {/* Popular Badge */}
               {plan.popular && (
@@ -165,7 +172,9 @@ export function PricingSection() {
         </div>
 
         {/* FAQ / Additional Info */}
-        <div className="mt-16 text-center">
+        <div className={`mt-16 text-center transition-all duration-700 delay-[450ms] ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
           <p className="text-sm text-muted-foreground">
             All plans include a 14-day free trial. No credit card required.
             <br />

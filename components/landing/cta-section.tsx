@@ -4,14 +4,18 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 export function CtaSection() {
   const { data: session } = useSession()
   const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+  const isVisible = useScrollAnimation("cta")
 
   return (
-    <section className="relative border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
+    <section className="relative border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="cta">
+      <div className={`relative z-10 mx-auto max-w-4xl text-center transition-all duration-700 ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+      }`}>
         <h2 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
           Ready to get started?
         </h2>

@@ -1,4 +1,6 @@
-import React from "react"
+"use client"
+
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { Instagram, Calendar, Wand2, BarChart3, Clock, ArrowRight, Video, Image, TrendingUp, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -79,11 +81,37 @@ const products = [
 ]
 
 export function ProductsSection() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    const section = document.getElementById("products")
+    if (section) observer.observe(section)
+
+    return () => {
+      if (section) observer.unobserve(section)
+    }
+  }, [isVisible])
+
   return (
     <section className="border-t px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="products">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div
+          className={`mx-auto mb-16 max-w-3xl text-center transition-all duration-700 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+        >
           <h2 className="mb-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
             Three powerful products
           </h2>
@@ -94,13 +122,18 @@ export function ProductsSection() {
 
         {/* Products Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => {
+          {products.map((product, index) => {
             const ProductIcon = product.icon
 
             return (
               <div
                 key={product.name}
-                className="group relative flex flex-col overflow-hidden rounded-xl border bg-card p-8 transition-all hover:shadow-lg"
+                className={`group relative flex flex-col overflow-hidden rounded-xl border bg-card p-8 transition-all duration-700 hover:shadow-lg ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+                }`}
+                style={{
+                  transitionDelay: `${index * 150}ms`,
+                }}
               >
                 <div className="flex flex-1 flex-col">
                   {/* Icon and Badge */}

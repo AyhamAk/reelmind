@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Download, Star, Workflow, Zap, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 
 const workflows = [
   {
@@ -39,12 +40,15 @@ const workflows = [
 export function WorkflowMarketplaceSection() {
   const { data: session } = useSession()
   const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+  const isVisible = useScrollAnimation("workflows")
 
   return (
     <section className="border-t bg-muted/30 px-4 py-24 sm:px-6 lg:px-8 lg:py-32" id="workflows">
       <div className="mx-auto max-w-7xl">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-3xl text-center">
+        <div className={`mx-auto mb-16 max-w-3xl text-center transition-all duration-700 ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-sm font-medium">
             <Workflow className="h-4 w-4" />
             <span className="text-foreground">n8n Workflow Marketplace</span>
@@ -65,10 +69,13 @@ export function WorkflowMarketplaceSection() {
 
         {/* Workflows Grid */}
         <div className="mb-12 grid gap-6 md:grid-cols-2">
-          {workflows.map((workflow) => (
+          {workflows.map((workflow, index) => (
             <div
               key={workflow.name}
-              className="group overflow-hidden rounded-lg border bg-card p-6 transition-all hover:shadow-lg"
+              className={`group overflow-hidden rounded-lg border bg-card p-6 transition-all duration-700 hover:shadow-lg ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="mb-4 flex items-start justify-between">
                 <div className="flex-1">
@@ -111,7 +118,9 @@ export function WorkflowMarketplaceSection() {
         </div>
 
         {/* CTA to Marketplace */}
-        <div className="text-center">
+        <div className={`text-center transition-all duration-700 delay-[600ms] ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
           <p className="mb-4 text-muted-foreground">
             100+ workflows will be available when marketplace launches
           </p>

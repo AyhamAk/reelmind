@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,29 +9,52 @@ import { useSession } from "next-auth/react"
 export function HeroSection() {
   const { data: session } = useSession()
   const ctaHref = session?.user ? "/dashboard/manager" : "/survey"
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    // Trigger animation on mount
+    const timer = setTimeout(() => setIsVisible(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   return (
     <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-3xl text-center">
           {/* Simple badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1 text-sm font-medium">
+          <div
+            className={`mb-8 inline-flex items-center gap-2 rounded-full border bg-muted/50 px-3 py-1 text-sm font-medium transition-all duration-700 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             <span className="text-foreground">Open-source • Privacy-first • n8n-powered</span>
           </div>
 
           {/* Clean, large headline */}
-          <h1 className="mb-6 text-5xl font-semibold leading-tight tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+          <h1
+            className={`mb-6 text-5xl font-semibold leading-tight tracking-tight text-foreground transition-all duration-700 delay-100 sm:text-6xl lg:text-7xl ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             Social media automation for creators who own their data
           </h1>
 
           {/* Subheadline */}
-          <p className="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-muted-foreground">
+          <p
+            className={`mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-muted-foreground transition-all duration-700 delay-200 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             Automate Instagram posting. Generate viral TikTok content. Predict engagement with AI.
             Built on open-source n8n. Your data, your rules.
           </p>
 
           {/* Simple CTA Buttons */}
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div
+            className={`flex flex-col items-center justify-center gap-3 transition-all duration-700 delay-300 sm:flex-row ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             <Button
               size="lg"
               asChild
@@ -54,7 +78,11 @@ export function HeroSection() {
           </div>
 
           {/* Simple social proof */}
-          <div className="mt-12 text-sm text-muted-foreground">
+          <div
+            className={`mt-12 text-sm text-muted-foreground transition-all duration-700 delay-[400ms] ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
             <p>Trusted by 500+ creators worldwide</p>
           </div>
         </div>
