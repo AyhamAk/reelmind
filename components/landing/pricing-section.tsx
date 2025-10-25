@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { HowItWorksAnimated } from "@/components/pricing/how-it-works-animated"
 
 const plans = [
   {
@@ -85,6 +86,9 @@ export function PricingSection() {
             Choose the plan that fits your needs. Upgrade or downgrade at any time.
           </p>
         </div>
+
+        {/* How It Works - Animated */}
+        <HowItWorksAnimated />
 
         {/* Pricing Cards */}
         <div className="grid gap-8 lg:grid-cols-3">
