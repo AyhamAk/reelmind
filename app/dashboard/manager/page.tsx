@@ -3,6 +3,7 @@ import { auth } from "@/auth"
 import { Calendar, BarChart3, Clock, Plus, Instagram as InstagramIcon, Video, Settings } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { SurveyPreferences } from "@/components/dashboard/survey-preferences"
 
 export default async function ManagerPage() {
   const session = await auth()
@@ -87,6 +88,11 @@ export default async function ManagerPage() {
             <BarChart3 className="h-4 w-4" />
             View Analytics
           </Button>
+        </div>
+
+        {/* Survey Preferences */}
+        <div className="mb-8">
+          <SurveyPreferences />
         </div>
 
         {/* Connected Accounts */}

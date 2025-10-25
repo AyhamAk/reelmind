@@ -1,11 +1,12 @@
 import { redirect } from "next/navigation"
 import { auth } from "@/auth"
-import { User, Lock } from "lucide-react"
+import { User, Lock, ClipboardList } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ProfileSettings } from "@/components/settings/profile-settings"
 import { SecuritySettings } from "@/components/settings/security-settings"
+import { SurveyPreferences } from "@/components/dashboard/survey-preferences"
 
 export default async function SettingsPage() {
   const session = await auth()
@@ -45,7 +46,7 @@ export default async function SettingsPage() {
         </div>
 
         <Tabs defaultValue="profile" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:w-[300px]">
+          <TabsList className="grid w-full grid-cols-3 lg:w-[450px]">
             <TabsTrigger value="profile" className="gap-2">
               <User className="h-4 w-4" />
               Profile
@@ -53,6 +54,10 @@ export default async function SettingsPage() {
             <TabsTrigger value="security" className="gap-2">
               <Lock className="h-4 w-4" />
               Security
+            </TabsTrigger>
+            <TabsTrigger value="preferences" className="gap-2">
+              <ClipboardList className="h-4 w-4" />
+              Preferences
             </TabsTrigger>
           </TabsList>
 
@@ -62,6 +67,10 @@ export default async function SettingsPage() {
 
           <TabsContent value="security" className="space-y-4">
             <SecuritySettings user={session.user} />
+          </TabsContent>
+
+          <TabsContent value="preferences" className="space-y-4">
+            <SurveyPreferences />
           </TabsContent>
         </Tabs>
       </main>

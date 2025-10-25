@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react"
 
 export function HeroSection() {
   const { data: session } = useSession()
-  const ctaHref = session?.user ? "/dashboard/manager" : "/login"
+  const ctaHref = session?.user ? "/dashboard/manager" : "/survey"
 
   return (
     <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 lg:py-32">

@@ -22,6 +22,8 @@ model User {
   password      String?   // For email/password authentication
   accounts      Account[]
   sessions      Session[]
+  surveyResponses SurveyResponse[]
+  tiktokAccounts TikTokAccount[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -64,4 +66,48 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model SurveyResponse {
+  id                String   @id @default(cuid())
+  userId            String?  // Optional - can be null for anonymous responses
+  user              User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Survey answers
+  platform          String?  // instagram, tiktok, both
+  goal              String?  // grow, consistency, engagement, automate
+  postingFrequency  String?  // daily, weekly, occasional
+  userType          String?  // creator, business, agency, exploring
+  automationLevel   String?  // helpers, mostly, full
+
+  // Selected services (stored as JSON array of service IDs)
+  selectedServices  String?  // JSON stringified array
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model TikTokAccount {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  openId      String   @unique
+  unionId     String?
+  username    String?
+  displayName String?
+  avatarUrl   String?
+
+  accessToken      String?
+  refreshToken     String?
+  expiresAt        DateTime?
+  refreshExpiresAt DateTime?
+  scope            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
