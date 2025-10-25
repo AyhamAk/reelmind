@@ -35,10 +35,10 @@ export function Navbar() {
             Products
           </a>
           <a
-            href="#features"
+            href="#how-it-works"
             className="text-sm text-muted-foreground transition-colors hover:text-foreground cursor-pointer"
           >
-            Features
+            How It Works
           </a>
           <a
             href="#workflows"

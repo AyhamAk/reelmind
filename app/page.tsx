@@ -2,7 +2,6 @@ import { Navbar } from "@/components/landing/navbar"
 import { HeroSection } from "@/components/landing/hero-section"
 import { ProductsSection } from "@/components/landing/products-section"
 import { HowItWorksSection } from "@/components/landing/how-it-works-section"
-import { FeaturesSection } from "@/components/landing/features-section"
 import { WorkflowMarketplaceSection } from "@/components/landing/workflow-marketplace-section"
 import { PricingSection } from "@/components/landing/pricing-section"
 import { CtaSection } from "@/components/landing/cta-section"
@@ -16,7 +15,6 @@ export default function Home() {
       <HeroSection />
       <ProductsSection />
       <HowItWorksSection />
-      <FeaturesSection />
       <WorkflowMarketplaceSection />
       <PricingSection />
       <CtaSection />
