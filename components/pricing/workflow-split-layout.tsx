@@ -1,8 +1,41 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { Upload, Brain, Eye, Rocket, Sparkles, CheckCircle2, Zap, Image, Calendar, Share2 } from "lucide-react"
 
 export function WorkflowSplitLayout() {
+  const [visibleSteps, setVisibleSteps] = useState<number[]>([])
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !inView) {
+            setInView(true);
+            // Animate steps sequentially
+            [0, 1, 2, 3, 4, 5].forEach((step, index) => {
+              setTimeout(() => {
+                setVisibleSteps((prev) => [...prev, step])
+              }, index * 150) // 150ms delay between each step
+            })
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    const section = document.getElementById("how-it-works")
+    if (section) {
+      observer.observe(section)
+    }
+
+    return () => {
+      if (section) {
+        observer.unobserve(section)
+      }
+    }
+  }, [inView])
   const features = [
     {
       icon: Share2,
@@ -183,14 +216,29 @@ export function WorkflowSplitLayout() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature, index) => {
           const Icon = feature.icon
+          const isVisible = visibleSteps.includes(index)
 
           return (
             <div
               key={feature.title}
-              className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 transition-all duration-300 hover:border-purple-300 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-700"
+              className={`group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 transition-all duration-500 hover:border-purple-300 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-purple-700 ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+              }`}
+              style={{
+                transitionDelay: `${index * 50}ms`,
+              }}
             >
-              {/* Step Number Badge */}
-              <div className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-sm font-bold text-gray-400 dark:bg-gray-800 dark:text-gray-600">
+              {/* Step Number Badge - Animated */}
+              <div
+                className={`absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full text-base font-bold transition-all duration-500 ${
+                  isVisible
+                    ? "scale-100 bg-gradient-to-br from-purple-500 to-blue-500 text-white shadow-lg shadow-purple-500/30"
+                    : "scale-0 bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-600"
+                }`}
+                style={{
+                  transitionDelay: `${index * 150 + 100}ms`,
+                }}
+              >
                 {index + 1}
               </div>
 
